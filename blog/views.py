@@ -11,10 +11,13 @@ def home(request):
 
 class PostListView(ListView):
     model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    ordering = ['date_posted']
     
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': about})
+    return render(request, 'blog/about.html', {'title': about}) 
 
 def imSoHappy(request):
     return HttpResponse('<h1>Hey, I am Nick!</h1>')

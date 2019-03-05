@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, FriendListForm, AddFriendForm
 from django.contrib.auth.decorators import login_required
+from .models import FriendList
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -34,3 +36,17 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
+
+@login_required
+def add_friend(request):
+    p_form = FriendListForm(instance= request.user.friends)
+    if request.method == 'POST':
+        if p_form.is_valid():
+            p_form.
+            p_form.save()
+            messages.success(request, f'You have added the user as a friend.')
+        
+    context = {
+        'p_form': p_form
+    }
+    return render(request, 'users/friends_list.html', context)

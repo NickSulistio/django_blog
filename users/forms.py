@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Profile, FriendList
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -18,6 +18,16 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email',]
 
 class ProfileUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
     class Meta:
         model = Profile
         fields = ['image']
+        
+class FriendListForm(forms.ModelForm):
+    class Meta:
+        model = FriendList
+        fields = ['friends']
+
+class AddFriendForm(forms.Form):
+    class Meta:
+        possibleFriends = forms.ChoiceField(choices = User.objects.all())

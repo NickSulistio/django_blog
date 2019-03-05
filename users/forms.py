@@ -22,11 +22,11 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
-        
+
 class FriendListForm(forms.ModelForm):
     class Meta:
         model = FriendList
-        fields = ['friends']
+        fields = ['users']
 
 class AddFriendForm(forms.Form):
     class Meta:

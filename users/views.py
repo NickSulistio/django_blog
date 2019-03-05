@@ -39,10 +39,9 @@ def profile(request):
 
 @login_required
 def add_friend(request):
-    p_form = FriendListForm(instance= request.user.friends)
+    p_form = FriendListForm(instance= request.user.profile)
     if request.method == 'POST':
         if p_form.is_valid():
-            p_form.
             p_form.save()
             messages.success(request, f'You have added the user as a friend.')
         

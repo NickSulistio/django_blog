@@ -15,4 +15,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk' : self.pk})
 
-
+class Announcement(models.Model):
+    title = models.CharField(max_length=100) #text
+    content = models.TextField() #image
+    date_posted = models.DateTimeField(default= timezone.now) #date
+    author = models.ForeignKey(User, on_delete=models.CASCADE) #when user is deleted all posts are deleted as well

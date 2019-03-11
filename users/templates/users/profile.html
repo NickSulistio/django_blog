@@ -21,4 +21,14 @@
           </div>
         </form>
       </div>
+      <div class = "content-section">
+        {% for friends in friends_list%}
+          <p class= 'text-secondary'> {{ friends.username }}</p>
+        {% endfor %}
+      </div>
+      <div class = "content-section">
+          {% for users in possible_friends%}
+            <p class= 'text-secondary'> {{ users.username }}</p>
+          {% endfor %}
+        </div>
 {% endblock content%}

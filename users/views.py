@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, FriendListForm, AddFriendForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, FriendListUpdateForm
 from django.contrib.auth.decorators import login_required
-from .models import FriendList
+#from .models import FriendList
 from django.contrib.auth.models import User
 
 
@@ -22,7 +22,8 @@ def register(request):
 def profile(request):
     if request.method =='POST':
         u_form = UserUpdateForm(request.POST,instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        pf_form = FriendListUpdateForm(request.POST, instance= request.user.profile.friendList)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -31,21 +32,29 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)    
+        pf_form = FriendListUpdateForm(current_user=request.user)
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'friends_list': request.user.profile.friendList.all(),
+        'pf_form': pf_form,
     }
     return render(request, 'users/profile.html', context)
 
+"""
 @login_required
-def add_friend(request):
-    p_form = FriendListForm(instance= request.user.profile)
-    if request.method == 'POST':
-        if p_form.is_valid():
-            p_form.save()
-            messages.success(request, f'You have added the user as a friend.')
-        
-    context = {
-        'p_form': p_form
+def friend_add
+@login_required
+def add_friend(request,pk):
+    new_friend = User.objects.get(pk=pk)
+    Friendlist.add_friend(request.user, new_friend) 
+
+    context = {'new_friend': new_friend
     }
-    return render(request, 'users/friends_list.html', context)
+
+    return render(request, 'friend_list.html')
+@login_required
+def remove_friend(request, pk):
+    new_friend = User.objects.get(pk=pk)
+    FriendList.lose_friend(request.user, new_friend)
+"""

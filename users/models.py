@@ -4,7 +4,8 @@ from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
-    image = models.ImageField(default = 'default.jpg', upload_to = 'profile_pics') 
+    image = models.ImageField(default = 'default.jpg', upload_to = 'profile_pics')     
+    friendList = models.ManyToManyField(User, related_name='friends') #User.objects.exclude(friends__user=u)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -18,7 +19,7 @@ class Profile(models.Model):
             output_size=(300,300)
             img.thumbnail(output_size)
             img.save(self.image.path)
-
+"""
 class FriendList(models.Model):
     users = models.ManyToManyField(User)
     current_user =models.OneToOneField(User, related_name='friends', null=True, on_delete=models.CASCADE)
@@ -37,6 +38,27 @@ class FriendList(models.Model):
         friend.users.remove(new_friend)
     def __str__(self):
         return str(self.current_user)
+"""
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('title',)
+
+class Article(models.Model):
+    headline = models.CharField(max_length=300)
+    publications = models.ManyToManyField(Publication)
+    
+    def __str__(self):
+        return self.headline
+
+    class Meta:
+        ordering = ('headline',)
+
+
 """
 user1 = User.objects.create()
 friendsList1 = FriendList.objects.create(current_user=user1)

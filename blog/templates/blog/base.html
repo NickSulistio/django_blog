@@ -69,9 +69,13 @@
                         <li class="list-group-item list-group-item-light">Calendars</li>
                         <li class="list-group-item list-group-item-light">etc</li>
                     </ul>
-                    </p>
-                </div>
-                </div>
+                    <br>                   
+                    <h3>Friends</h3>
+                    <ul class ='list-group'>
+                        {% for friends in friendsList%}
+                            <a class="list-group-item list-group-item-light"> {{ friends.username }}</a>
+                        {% endfor %}
+                    </ul>
             </div>
             </main>
     <!-- Optional JavaScript -->

@@ -10,7 +10,7 @@ def friendsList(request):
     if request.user.is_authenticated:
         friendsList = request.user.profile.friendList.all()
     else:
-        friendsList = 'Log in to see your friends list!'
+        friendsList = None
     return {
         'friendsList': friendsList,
     }

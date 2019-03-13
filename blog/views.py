@@ -5,14 +5,16 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from users.models import Profile
 
 
 def home(request):
     context ={
         'posts': Post.objects.all()
+        
     }
     return render(request, 'blog/home.html', context)
+
 
 
 class PostListView(ListView):
@@ -21,6 +23,7 @@ class PostListView(ListView):
     context_object_name = 'posts'   
     ordering = ['-date_posted']
     paginate_by = 5
+
 
 class UserPostListView(ListView):
     model = Post
@@ -78,3 +81,19 @@ def about(request):
 
 def imSoHappy(request):
     return HttpResponse('<h1>Hey, I am Nick!</h1>')
+
+class FriendFilteredView(ListView):
+    model = Post
+    template_name = 'blog/friends_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        get_friends = self.request.user.profile.friendList.all()
+        total_posts = User.objects.none()
+        for users in get_friends:
+            posts = Post.objects.filter(author=users)
+            total_posts = total_posts | posts
+        return total_posts.order_by('-date_posted')
+        
+        

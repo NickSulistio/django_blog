@@ -21,3 +21,4 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+class FriendListUpdateForm(forms.Form):

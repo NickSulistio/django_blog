@@ -90,10 +90,7 @@ class FriendFilteredView(ListView):
 
     def get_queryset(self):
         get_friends = self.request.user.profile.friendList.all()
-        total_posts = User.objects.none()
-        for users in get_friends:
-            posts = Post.objects.filter(author=users)
-            total_posts = total_posts | posts
-        return total_posts.order_by('-date_posted')
+        return Post.objects.filter(author__in = get_friends).order_by('-date_posted')
         
-        
+def Website(request):
+    return render(request, 'blog/website.html')

@@ -1,0 +1,41 @@
+.mycard {
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.header {
+    text-align: center;
+    color: #fff;
+    background: salmon;
+    padding: 150px
+}
+
+.mycontainer {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 695px
+}
+
+.mynav {
+    padding: 20px;
+    
+}
+
+.mynavtext {
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: grey
+
+}
+
+.name {
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    font-size: 4.75em;
+    font-weight: 700;
+    color: aliceblue;
+}

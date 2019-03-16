@@ -24,7 +24,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 class FriendListUpdateForm(forms.Form):
-    possibleFriends = forms.ModelChoiceField(queryset=User.objects.none(), empty_label="Please select a user to add")
+    Users = forms.ModelChoiceField(queryset=User.objects.none(), empty_label="Please select a user to add")
 
     def __init__(self, *args, **kwargs):
         # Get current_user from parameters
@@ -34,7 +34,9 @@ class FriendListUpdateForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         # Set the possible friends
-        self.fields['possibleFriends'].queryset = User.objects.exclude(friends__user=current_user)
+        all_users = User.objects.exclude(friends__user=current_user)
+        all_users = all_users.exclude(id= current_user.id)
+        self.fields['Users'].queryset = all_users
 
 class FriendListRemoveForm(forms.Form):
     removeFriend = forms.ModelChoiceField(queryset= User.objects.none(), empty_label= ('Please select a user to remove'))
